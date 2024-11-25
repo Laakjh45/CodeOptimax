@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <title>Sorting Visualization</title>
+    <style>
+        #sortChart {
+            border: 1px solid #000;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            height: 300px; /* Set a fixed height for the canvas */
+        }
+        .btn-home {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: block; /* Center the button */
+            width: 100%; /* Make the button full width */
+        }
+        h1 {
+            margin-bottom: 20px; /* Add some space below the title */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Visualize Sorting Algorithms</h1>
+        <form id="sortForm" class="mt-4">
+            <div class="form-group">
+                <label for="numbers">Enter numbers (comma-separated):</label>
+                <input type="text" class="form-control" id="numbers" name="numbers" required>
+            </div>
+            <div class="form-group">
+                <label for="algorithm">Select Sorting Algorithm:</label>
+                <select class="form-control" id="algorithm" name="algorithm" required>
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Visualize</button>
+        </form>
+
+        <canvas id="sortChart" width="600" height="300"></canvas>
+        
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-home">Back to Home</a>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('sortChart');
+        const ctx = canvas.getContext('2d');
+
+        let array = [];
+        let delay = 100; // Delay between steps (milliseconds)
+
+        document.getElementById('sortForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const input = document.getElementById('numbers').value;
+            array = input.split(',').map(Number).filter(num => !isNaN(num) && num > 0); // Filter valid positive numbers
+            if (array.length === 0) {
+                alert("Please enter valid positive numbers.");
+                return;
+            }
+            const algorithm = document.getElementById('algorithm').value;
+            drawArray(array); // Initial draw
+
+            if (algorithm === 'bubble') {
+                bubbleSort(array.slice());
+            } else if (algorithm === 'merge') {
+                mergeSort(array.slice());
+            } else if (algorithm === 'quick') {
+                quickSort(array.slice(), 0, array.length - 1);
+            }
+        });
+
+        function drawArray(arr, highlightedIndices = []) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const barWidth = canvas.width / arr.length;
+            arr.forEach((value, index) => {
+                const height = value * 4; // Scale height for visualization
+                const color = highlightedIndices.includes(index) ? 'red' : getGradientColor(value, arr.length);
+                ctx.fillStyle = color;
+                ctx.fillRect(index * barWidth, canvas.height - height, barWidth - 2, height);
+            });
+        }
+
+        function getGradientColor(value, max) {
+            const ratio = value / max;
+            const r = Math.floor(255 * (1 - ratio));
+            const g = Math.floor(255 * ratio);
+            return `rgb(${r}, ${g}, 0)`; // Gradient from green to red
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function bubbleSort(arr) {
+            const len = arr.length;
+            for (let i = 0; i < len - 1; i++) {
+                for (let j = 0; j < len - 1 - i; j++) {
+                    drawArray(arr, [j, j + 1]); // Highlight current elements
+                    await sleep(delay);
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // Swap
+                    }
+                }
+            }
+            drawArray(arr); // Final draw
+        }
+
+        async function mergeSort(arr) {
+            await mergeSortHelper(arr, 0, arr.length - 1);
+            drawArray(arr); // Final draw
+        }
+
+        async function mergeSortHelper(arr, left, right) {
+            if (left < right) {
+                const mid = Math.floor((left + right) / 2);
+                await mergeSortHelper(arr, left, mid);
+                await mergeSortHelper(arr, mid + 1, right);
+                await merge(arr, left, mid, right);
+            }
+        }
+
+        async function merge(arr, left, mid, right) {
+            const leftArray = arr.slice(left, mid + 1);
+            const rightArray = arr.slice(mid + 1, right + 1);
+            let i = 0, j = 0, k = left;
+
+            while (i < leftArray.length && j < rightArray.length) {
+                drawArray(arr, [k, k + 1]); // Highlight current elements
+                await sleep(delay);
+                if (leftArray[i] <= rightArray[j]) {
+                    arr[k] = leftArray[i];
+                    i++;
+                } else {
+                    arr[k] = rightArray[j];
+                    j++;
+                }
+                k++;
+            }
+
+            while (i < leftArray.length) {
+                drawArray(arr, [k]); // Highlight current element
+                await sleep(delay);
+                arr[k] = leftArray[i];
+                i++;
+                k++;
+            }
+
+            while (j < rightArray.length) {
+                drawArray(arr, [k]); // Highlight current element
+                await sleep(delay);
+                arr[k] = rightArray[j];
+                j++;
+                k++;
+            }
+        }
+
+        async function quickSort(arr, low, high) {
+            if (low < high) {
+                const pivotIndex = await partition(arr, low, high);
+                await quickSort(arr, low, pivotIndex - 1);
+                await quickSort(arr, pivotIndex + 1, high);
+            }
+        }
+
+        async function partition(arr, low, high) {
+            const pivot = arr[high];
+            let i = low - 1;
+
+            for (let j = low; j < high; j++) {
+                drawArray(arr, [j, high]); // Highlight current element and pivot
+                await sleep(delay);
+                if (arr[j] < pivot) {
+                    i++;
+                    [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap
+                }
+            }
+            [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]; // Swap pivot
+            drawArray(arr, [i + 1]); // Highlight pivot position
+            await sleep(delay);
+            return i + 1;
+        }
+    </script>
+</body>
+</html>

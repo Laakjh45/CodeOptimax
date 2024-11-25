@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Sorting Algorithms</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Sorting Algorithms</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="numbers">Enter numbers (comma-separated):</label>
+                <input type="text" class="form-control" id="numbers" name="numbers" required>
+            </div>
+            <div class="form-group">
+                <label for="algorithm">Select Sorting Algorithm:</label>
+                <select class="form-control" id="algorithm" name="algorithm" required>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="bubble">Bubble Sort</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Sort</button>
+        </form>
+    </div>
+</body>
+</html>

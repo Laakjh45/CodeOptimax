@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>LCS Result</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Longest Common Subsequence Result</h1>
+        <h2>LCS: <span class="result">{{ lcs }}</span></h2>
+        <h3>Matrix:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    {% for j in range(matrix[0]|length) %}
+                    <th>{{ j }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(matrix|length) %}
+                <tr>
+                    <th>{{ i }}</th>
+                    {% for cell in matrix[i] %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="button" href="/lcs">Try Again</a>
+        <a class="button" href="/">Back to Home</a>
+    </div>
+</body>
+</html>

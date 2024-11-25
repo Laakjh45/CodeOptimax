@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Knapsack Result</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Knapsack Problem Result</h1>
+        <h2>Maximum Value: <span class="result">{{ max_value }}</span></h2>
+        
+        <h3>Items Included:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Weight</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for weight, value in items_included %}
+                <tr>
+                    <td>{{ weight }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Visualization:</h3>
+        <canvas id="knapsackChart" width="400" height="200"></canvas>
+
+        <a class="button" href="/knapsack">Try Again</a>
+        <a class="button" href="/">Back to Main</a>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('knapsackChart').getContext('2d');
+        
+        // Extract weights and values from items_included
+        const itemsIncluded = {{ items_included|tojson }};
+        const weights = itemsIncluded.map(item => item[0]);
+        const values = itemsIncluded.map(item => item[1]);
+
+        const knapsackChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: weights,
+                datasets: [{
+                    label: 'Values',
+                    data: values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

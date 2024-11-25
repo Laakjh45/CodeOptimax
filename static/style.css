@@ -1,0 +1,126 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif; /* Updated font */
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 30px; /* Increased padding for better spacing */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
+
+h1, h2, h3 {
+    color: #023a5f; /* Consistent heading color */
+    margin-bottom: 15px; /* Space below headings */
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif; /* Different font for main heading */
+    font-size: 2.5rem; /* Larger font size for H1 */
+}
+
+h2 {
+    font-size: 2rem; /* Font size for H2 */
+}
+
+h3 {
+    font-size: 1.5rem; /* Font size for H3 */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    font-weight: bold; /* Bold labels for emphasis */
+}
+
+input {
+    padding: 12px; /* Increased padding for better touch targets */
+    margin-bottom: 15px; /* Space below inputs */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+}
+
+button {
+    padding: 12px; /* Increased padding for buttons */
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.result {
+    font-weight: bold;
+    color: #d9534f; /* Bootstrap danger color */
+    margin-top: 20px; /* Space above result */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px; /* Increased padding for table cells */
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold; /* Bold text for headers */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 20px; /* Increased padding for buttons */
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+canvas {
+    margin-top: 20px;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    <title>CodeOptimax</title>
+    <style>
+        .algorithm-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: box-shadow 0.3s;
+        }
+        .algorithm-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .algorithm-title {
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+        .algorithm-description {
+            font-size: 1rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h1 class="mb-4">Welcome to the CodeOptimax</h1>
+        <h2>Select a Problem to Solve</h2>
+
+        <div class="algorithm-card">
+            <div class="algorithm-title">Longest Common Subsequence</div>
+            <div class="algorithm-description">Find the longest subsequence present in two sequences.</div>
+            <a class="btn btn-primary btn-lg m-2" href="{{ url_for('lcs') }}">Solve LCS</a>
+        </div>
+
+        <div class="algorithm-card">
+            <div class="algorithm-title">Knapsack Problem</div>
+            <div class="algorithm-description">Determine the maximum value that can be carried in a knapsack of fixed capacity.</div>
+            <a class="btn btn-success btn-lg m-2" href="{{ url_for('knapsack') }}">Solve Knapsack</a>
+        </div>
+
+        <div class="algorithm-card">
+            <div class="algorithm-title">Sorting Algorithms</div>
+            <div class="algorithm-description">Sort a list of numbers using various algorithms.</div>
+            <a class="btn btn-info btn-lg m-2" href="{{ url_for('sorting') }}">Solve Sorting</a>
+        </div>
+
+        <div class="algorithm-card">
+            <div class="algorithm-title">Huffman Encoding</div>
+            <div class="algorithm-description">Encode a string using Huffman coding.</div>
+            <a class="btn btn-dark btn-lg m-2" href="{{ url_for('huffman') }}">Encode with Huffman</a>
+        </div>
+    </div>
+</body>
+</html>

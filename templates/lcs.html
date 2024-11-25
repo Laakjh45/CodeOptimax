@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Longest Common Subsequence</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Longest Common Subsequence</h1>
+        <form method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="string1">String 1:</label>
+                <input type="text" class="form-control" name="string1" required>
+            </div>
+            <div class="form-group">
+                <label for="string2">String 2:</label>
+                <input type="text" class="form-control" name="string2" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Solve</button>
+        </form>
+        <a class="btn btn-secondary mt-3" href="/">Back to Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Huffman Encoding Result</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif; /* Updated font */
+            background-color: #f8f9fa; /* Light background color */
+            color: #343a40; /* Dark text color */
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px; /* Maximum width for the container */
+            margin: auto; /* Centering the container */
+            background: white; /* White background for the container */
+            padding: 30px; /* Padding inside the container */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        h1, h2, h3 {
+            color: #06305d; /* Blue color for headings */
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif; /* Different font for main heading */
+            font-size: 2.5rem; /* Larger font size for H1 */
+        }
+        table {
+            background-color: #fbf9f9; /* White background for the table */
+            border-radius: 0.5rem; /* Rounded corners for the table */
+            overflow: hidden; /* To ensure the rounded corners are respected */
+        }
+        th {
+            background-color: #007bff; /* Blue header background */
+            color: #ffffff; /* White text for header */
+        }
+        td {
+            color: #495057; /* Dark gray text for table data */
+        }
+        .result {
+            font-weight: bold; /* Bold text for results */
+            color: #28a745; /* Green color for results */
+        }
+        .btn-secondary {
+            background-color: #6c757d; /* Darker secondary button color */
+            border-color: #6c757d; /* Border color for buttons */
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Darker on hover */
+            border-color: #545b62; /* Darker border on hover */
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Huffman Encoding Result</h1>
+        <br/>
+        <h2>Encoded String: <span class="result">{{ encoded_string }}</span></h2>
+        <br/>
+        <h3>Total Cost: <span class="result">{{ total_cost }}</span> bits</h3>
+        <br/>
+        <h3>Huffman Codes:</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Character</th>
+                    <th>Count</th>
+                    <th>Code</th>
+                    <th>Bits Used</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for char, count, code, bits in huffman_table %}
+                <tr>
+                    <td>{{ char }}</td>
+                    <td>{{ count }}</td>
+                    <td>{{ code }}</td>
+                    <td>{{ bits }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Character Frequency Visualization:</h3>
+        <canvas id="frequencyChart" width="400" height="200"></canvas>
+
+        <a class="btn btn-primary mt-3" href="/huffman">Encode Again</a>
+        <a class="btn btn-secondary mt-3" href="/">Back to Home</a>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('frequencyChart').getContext('2d');
+        const labels = {{ huffman_table|map(attribute='0')|list|tojson }};
+        const counts = {{ huffman_table|map(attribute='1')|list|tojson }};
+        
+        const frequencyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Character Frequency',
+                    data: counts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Sorted Result</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Sorted Result</h1>
+        <p>Sorted Numbers: {{ sorted_numbers }}</p>
+        <a href="{{ url_for('sorting') }}" class="btn btn-secondary">Sort Again</a>
+    </div>
+</body>
+</html>
